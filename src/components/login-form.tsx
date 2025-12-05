@@ -93,14 +93,14 @@ export function LoginForm() {
       className="glass-card z-10 w-full max-w-md p-8 space-y-6"
     >
       <div className="text-center">
-        <h2 className="text-3xl font-headline font-bold">Secret Letter</h2>
-        <p className="text-muted-foreground mt-2">
+        <h2 className="text-3xl font-headline font-bold text-white">Secret Letter</h2>
+        <p className="text-white/80 mt-2">
           Enter your name and nickname to reveal your message.
         </p>
       </div>
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="name" className="text-foreground/80">
+          <Label htmlFor="name" className="text-white/90">
             Your Name
           </Label>
           <Input
@@ -122,7 +122,7 @@ export function LoginForm() {
           </div>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="nickname" className="text-foreground/80">
+          <Label htmlFor="nickname" className="text-white/90">
             Your Nickname
           </Label>
           <Input

@@ -62,7 +62,7 @@ export function LandingHero() {
       >
         A Letter For You
       </h1>
-      <p ref={pRef} className="max-w-2xl mx-auto text-lg md:text-xl text-foreground/70 mb-10">
+      <p ref={pRef} className="max-w-2xl mx-auto text-lg md:text-xl text-white/90 mb-10">
         Some words are meant only for the heart. Unlock your private message,
         sealed with care and waiting to be read.
       </p>
