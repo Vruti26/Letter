@@ -1,15 +1,15 @@
 {
   "letters": {
     "vruti": {
-      "nickname": "v",
+      "nickname": ["v", "vru", "vr"],
       "letter": "My Dearest VR,\n\nIn the quiet moments, my thoughts drift to you, a gentle melody in the symphony of my days. You are the warmth of the morning sun, the serene light of the moon, a constant source of joy and wonder. Every shared smile, every quiet understanding, weaves another thread into the beautiful tapestry of our connection. This is just a small whisper of what you mean to me, a secret held in the heart, now shared with you."
     },
     "smit": {
-      "nickname": "samu",
+      "nickname": ["samu"],
       "letter": "To my dear Samu,\n\nI wanted to take a moment to put into words something my heart feels every day. You have a way of making ordinary moments feel extraordinary. Your laughter is my favorite sound, and your strength inspires me more than you know. This is a small token, a secret note to remind you of the special place you hold in my life. Thank you for being you."
     },
     "user": {
-      "nickname": "test",
+      "nickname": ["test", "tester"],
       "letter": "Hello there, brave explorer!\n\nYou've found a test letter. This is a place for secrets, for words unspoken, for feelings shared in the quiet of the digital world. I hope this note finds you well and brings a smile to your face. Remember, even the smallest of notes can carry the greatest of meanings."
     }
   }

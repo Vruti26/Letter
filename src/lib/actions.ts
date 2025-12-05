@@ -39,10 +39,20 @@ export async function login(prevState: State, formData: FormData) {
 
   const { name, nickname } = validatedFields.data;
   const lowercaseName = name.toLowerCase().trim() as LetterKeys;
+  const trimmedNickname = nickname.toLowerCase().trim();
 
   const user = letters[lowercaseName];
 
-  if (user && user.nickname === nickname.trim()) {
+  let isValidNickname = false;
+  if (user) {
+    if (Array.isArray(user.nickname)) {
+      isValidNickname = user.nickname.map(n => n.toLowerCase()).includes(trimmedNickname);
+    } else if (typeof user.nickname === 'string') {
+      isValidNickname = user.nickname.toLowerCase() === trimmedNickname;
+    }
+  }
+
+  if (user && isValidNickname) {
     cookies().set('user', lowercaseName, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
