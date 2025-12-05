@@ -107,7 +107,6 @@ export function LoginForm() {
             id="name"
             name="name"
             type="text"
-            placeholder="e.g. Smit"
             required
             aria-describedby="name-error"
             className="bg-transparent focus:bg-background/50"
@@ -129,7 +128,6 @@ export function LoginForm() {
             id="nickname"
             name="nickname"
             type="password"
-            placeholder="e.g. samu"
             required
             aria-describedby="nickname-error"
             className="bg-transparent focus:bg-background/50"
