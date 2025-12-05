@@ -95,7 +95,7 @@ export function LoginForm() {
       <div className="text-center">
         <h2 className="text-3xl font-headline font-bold text-white">A Letter To You</h2>
         <p className="text-white/80 mt-2">
-          Enter your name and nickname  ( in small ) to reveal your message.
+          Enter your name and nickname to open your letter.
         </p>
       </div>
       <div className="space-y-4">
