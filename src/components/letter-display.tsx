@@ -66,7 +66,7 @@ export function LetterDisplay({ letterContent, userName }: { letterContent: stri
         onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && openEnvelope()}
         aria-label="Open the letter"
       >
-        <div className="absolute inset-0 bg-secondary rounded-lg shadow-2xl shadow-primary/20 border border-primary/20"></div>
+        <div className="absolute inset-0 bg-secondary rounded-lg shadow-2xl shadow-primary/20 border border-white/30"></div>
         {/* Flap */}
         <div
           ref={flapRef}
@@ -76,7 +76,7 @@ export function LetterDisplay({ letterContent, userName }: { letterContent: stri
             transformOrigin: 'top center',
           }}
         >
-          <div className="absolute inset-0 bg-accent border-b border-primary/50" style={{
+          <div className="absolute inset-0 bg-accent border-b border-white/50" style={{
             clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
           }}></div>
         </div>
@@ -88,12 +88,12 @@ export function LetterDisplay({ letterContent, userName }: { letterContent: stri
         </div>
         {/* Envelope body */}
         <div className="absolute inset-0">
-          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-secondary border-t border-primary/20" style={{ clipPath: 'polygon(0 100%, 100% 100%, 50% 0)' }}></div>
-          <div className="absolute top-0 left-0 w-1/2 h-full bg-secondary/80 border-r border-primary/20" style={{ clipPath: 'polygon(0 0, 100% 50%, 0 100%)' }}></div>
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-secondary/80 border-l border-primary/20" style={{ clipPath: 'polygon(100% 0, 0 50%, 100% 100%)' }}></div>
+          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-secondary border-t border-white/30" style={{ clipPath: 'polygon(0 100%, 100% 100%, 50% 0)' }}></div>
+          <div className="absolute top-0 left-0 w-1/2 h-full bg-secondary/80 border-r border-white/30" style={{ clipPath: 'polygon(0 0, 100% 50%, 0 100%)' }}></div>
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-secondary/80 border-l border-white/30" style={{ clipPath: 'polygon(100% 0, 0 50%, 100% 100%)' }}></div>
         </div>
         <div className="absolute inset-0 flex items-center justify-center">
-             <p className="text-xl text-primary-foreground font-semibold opacity-90">Click to open</p>
+             <p className="text-xl text-white font-semibold opacity-90">Click to open</p>
         </div>
       </div>
 
