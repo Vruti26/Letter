@@ -19,7 +19,7 @@ export default function LoginPage() {
           id="parallax-bg"
         />
       )}
-      <div className="absolute inset-0 bg-background/70 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-background/70" />
       <LoginForm />
     </div>
   );
