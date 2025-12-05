@@ -93,9 +93,9 @@ export function LoginForm() {
       className="glass-card z-10 w-full max-w-md p-8 space-y-6"
     >
       <div className="text-center">
-        <h2 className="text-3xl font-headline font-bold text-white">Secret Letter</h2>
+        <h2 className="text-3xl font-headline font-bold text-white">A Letter To You</h2>
         <p className="text-white/80 mt-2">
-          Enter your name and nickname to reveal your message.
+          Enter your name and nickname  ( in small ) to reveal your message.
         </p>
       </div>
       <div className="space-y-4">
@@ -107,6 +107,7 @@ export function LoginForm() {
             id="name"
             name="name"
             type="text"
+            placeholder="Your Name"
             required
             aria-describedby="name-error"
             className="bg-transparent focus:bg-background/50"
@@ -128,6 +129,7 @@ export function LoginForm() {
             id="nickname"
             name="nickname"
             type="password"
+            placeholder="Your nickame"
             required
             aria-describedby="nickname-error"
             className="bg-transparent focus:bg-background/50"
