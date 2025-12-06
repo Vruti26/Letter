@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { Button } from './ui/button';
+import { trackLetterOpen } from '@/lib/actions';
 
 export function LetterDisplay({ letterContent, userName }: { letterContent: string; userName: string }) {
   const [isOpened, setIsOpened] = useState(false);
@@ -13,8 +14,10 @@ export function LetterDisplay({ letterContent, userName }: { letterContent: stri
 
   const openEnvelope = () => {
     if (isOpened || !envelopeRef.current || !flapRef.current || !letterRef.current || !contentRef.current) return;
-
+    
+    trackLetterOpen(userName);
     setIsOpened(true);
+
     const tl = gsap.timeline();
 
     tl.to(flapRef.current, {

@@ -67,3 +67,8 @@ export async function login(prevState: State, formData: FormData): Promise<State
     };
   }
 }
+
+export async function trackLetterOpen(name: string) {
+  const timestamp = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
+  console.log(`💌 Letter for ${name} was opened at: ${timestamp} (UTC)`);
+}
