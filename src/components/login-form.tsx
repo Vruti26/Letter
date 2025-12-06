@@ -1,6 +1,7 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { login, type State } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,13 +23,13 @@ function SubmitButton() {
 
 export function LoginForm() {
   const initialState: State = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(login, initialState);
+  const [state, dispatch] = useActionState(login, initialState);
   const { toast } = useToast();
 
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (state.errors?.credentials) {
+    if (state.errors && 'credentials' in state.errors) {
       toast({
         variant: 'destructive',
         title: 'Login Failed',
@@ -115,7 +116,7 @@ export function LoginForm() {
             className="bg-transparent focus:bg-background/50"
           />
           <div id="name-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.name &&
+            {state.errors && 'name' in state.errors && state.errors.name &&
               state.errors.name.map((error: string) => (
                 <p className="mt-2 text-sm text-destructive" key={error}>
                   {error}
@@ -137,7 +138,7 @@ export function LoginForm() {
             className="bg-transparent focus:bg-background/50"
           />
           <div id="nickname-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.nickname &&
+            {state.errors && 'nickname' in state.errors && state.errors.nickname &&
               state.errors.nickname.map((error: string) => (
                 <p className="mt-2 text-sm text-destructive" key={error}>
                   {error}
@@ -149,7 +150,7 @@ export function LoginForm() {
       
       <SubmitButton />
 
-      {state.errors?.credentials && (
+      {state.errors && 'credentials' in state.errors && (
         <div className="flex items-center space-x-2 text-sm text-destructive" aria-live="polite">
           <AlertCircle className="h-4 w-4" />
           <p>{state.errors.credentials}</p>
