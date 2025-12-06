@@ -1,38 +1,68 @@
-📮 Secret Letter Web App
 
-A simple, elegant Next.js application where users enter their name or nickname to unlock a personalized letter written just for them.
 
-This project is lightweight, easy to customize, and works perfectly when deployed on Vercel.
+# 📮 Secret Letter Web App
 
-🚀 Features
+This is a small and personal web app built using **Next.js**, where a user can enter their **name or nickname** to open a special letter written only for them.
+They cannot see anyone else’s letters — only their own.
+Simple, private, and meaningful. To experience the web version visit: `https://letter-b663qbqmw-vrutis-projects-370da7ab.vercel.app/`
 
-🔐 Name/Nickname Unlock System
-Users can enter their name or a nickname to access their unique letter.
+---
 
-📝 Personalized Letters Stored in data.json
-All letters and nicknames are stored in a single JSON file for easy editing.
+## 🌟 What This Project Does
 
-⚡ Next.js + Vercel Deployment
-Fast, serverless, and hassle-free hosting.
+* Users enter their **name or nickname** to open their letter
+* Every letter is stored safely inside a single `data.json` file
+* Clean UI and simple flow
+* Fully deployable on **Vercel**
+* Easy to update letters anytime
 
-📱 Responsive UI
-Works smoothly on mobile and desktop.
+---
 
-📂 Project Structure
-├── data.json         // Stores users, nicknames and letters
+## 📁 Project Structure
+
+```
+├── data.json        # All names, nicknames, and letters
 ├── pages/
-│   ├── index.js      // Home page where user enters name
-│   ├── letter.js     // Letter display page
+│   ├── index.js     # Login-like page (name/nickname input)
+│   ├── letter.js    # Shows the user’s letter
 ├── styles/
-│   ├── globals.css   // Global styling
-└── README.md         // Documentation
+│   ├── globals.css  # Styles
+└── README.md
+```
 
-🛠️ How It Works
+---
 
-User enters their name or nickname on the homepage.
+## ✏️ How Letters Work
 
-The system checks data.json to match the input.
+All personalized letters are stored in `data.json`.
+Each entry looks like this:
 
-If a match is found → the user's personal letter is displayed.
+```json
+{
+  "user": {
+    "nickname": ["test"],
+    "letter": "Your personalized letter goes here..."
+  }
+}
+```
 
-If not → user sees an error message.
+To add a new person:
+
+1. Open `data.json`
+2. Create a new object with:
+
+   * `"nickname"` → list of accepted nicknames
+   * `"letter"` → the letter you want them to see
+
+## ❤️ About
+
+This project was created to share personal messages in a simple, private, and thoughtful way — a digital version of handing someone a sealed letter.
+
+---
+
+If you want, I can:
+✅ Add screenshots of your website
+✅ Add badges (Vercel deploy badge, Next.js badge)
+✅ Add a more aesthetic version with colors & emojis
+
+Just tell me!
