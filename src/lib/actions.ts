@@ -8,7 +8,6 @@ import { kv } from '@vercel/kv';
 
 const { letters } = data;
 
-// Define a type for the keys of the letters object for type safety
 type LetterKeys = keyof typeof letters;
 
 const LoginSchema = z.object({
@@ -39,13 +38,21 @@ export async function login(prevState: State, formData: FormData): Promise<State
   }
 
   const { name, nickname } = validatedFields.data;
-  const lowercaseName = name.toLowerCase().trim() as LetterKeys;
+  
+  const lowercaseFirstName = name.toLowerCase().trim().split(' ')[0] as LetterKeys;
   const trimmedNickname = nickname.toLowerCase().trim();
 
-  const user = letters[lowercaseName];
+  const user = letters[lowercaseFirstName];
 
+  if (!user) {
+    return {
+      errors: { credentials: "You don't have a letter for this name." },
+      message: 'User not found.',
+    };
+  }
+  
   let isValidNickname = false;
-  if (user && user.nickname) {
+  if (user.nickname) {
     if (Array.isArray(user.nickname)) {
       isValidNickname = user.nickname.map(n => n.toLowerCase()).includes(trimmedNickname);
     } else if (typeof user.nickname === 'string') {
@@ -53,18 +60,26 @@ export async function login(prevState: State, formData: FormData): Promise<State
     }
   }
 
-  if (user && isValidNickname) {
-    cookies().set('user', lowercaseName, {
+  if (isValidNickname) {
+    cookies().set('user', lowercaseFirstName, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 60 * 60 * 24, // 1 day
       path: '/',
     });
-    redirect(`/${lowercaseName}/letter`);
+    redirect(`/${lowercaseFirstName}/letter`);
   } else {
+    // Provide a hint
+    let hint = '';
+    if (user.nickname) {
+      const firstNickname = Array.isArray(user.nickname) ? user.nickname[0] : user.nickname;
+      if (firstNickname) {
+        hint = `Hint: Your nickname starts with '${firstNickname.charAt(0).toLowerCase()}'.`;
+      }
+    }
     return {
-      errors: { credentials: "The name or nickname you entered is incorrect. Please try again." },
-      message: 'Invalid credentials.',
+      errors: { credentials: `Incorrect nickname. ${hint}` },
+      message: 'Invalid nickname.',
     };
   }
 }
@@ -74,7 +89,6 @@ export async function trackLetterOpen(name: string) {
     const timestamp = new Date().toISOString();
     const logEntry = { name, timestamp };
 
-    // We use a unique key for each log entry to avoid overwriting
     const key = `log:${timestamp}:${name}`;
 
     await kv.set(key, JSON.stringify(logEntry));
