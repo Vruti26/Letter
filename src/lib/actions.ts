@@ -52,11 +52,13 @@ export async function login(prevState: State, formData: FormData): Promise<State
   }
   
   let isValidNickname = false;
-  if (user.nickname) {
-    if (Array.isArray(user.nickname)) {
-      isValidNickname = user.nickname.map(n => n.toLowerCase()).includes(trimmedNickname);
-    } else if (typeof user.nickname === 'string') {
-      isValidNickname = user.nickname.toLowerCase() === trimmedNickname;
+  const userNicknames = user.nickname;
+
+  if (userNicknames) {
+    if (Array.isArray(userNicknames)) {
+      isValidNickname = userNicknames.map(n => n.toLowerCase()).includes(trimmedNickname);
+    } else if (typeof userNicknames === 'string') {
+      isValidNickname = userNicknames.toLowerCase() === trimmedNickname;
     }
   }
 
@@ -67,12 +69,12 @@ export async function login(prevState: State, formData: FormData): Promise<State
       maxAge: 60 * 60 * 24, // 1 day
       path: '/',
     });
-    redirect(`/${lowercaseFirstName}/letter`);
+    return redirect(`/${lowercaseFirstName}/letter`);
   } else {
     // Provide a hint
     let hint = '';
-    if (user.nickname) {
-      const firstNickname = Array.isArray(user.nickname) ? user.nickname[0] : user.nickname;
+    if (userNicknames) {
+      const firstNickname = Array.isArray(userNicknames) ? userNicknames[0] : userNicknames;
       if (firstNickname) {
         hint = `Hint: Your nickname starts with '${firstNickname.charAt(0).toLowerCase()}'.`;
       }
@@ -93,7 +95,8 @@ export async function trackLetterOpen(name: string) {
 
     await kv.set(key, JSON.stringify(logEntry));
     console.log(`💌 Letter for ${name} was opened and logged to Vercel KV at: ${timestamp}`);
-  } catch (error) {
+  } catch (error)
+  {
     console.error('Failed to log letter opening to Vercel KV:', error);
   }
 }
