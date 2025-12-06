@@ -34,6 +34,22 @@
       "hemanshi": {
         "nickname": ["hema", "hemanshi"],
         "letter": "Hello !,\n\nYour letter is here. You are warm, strong, and beautifully unique. I hope this message carries a little comfort and a quiet smile for you."
+      },
+      "siddhi": {
+        "nickname": ["siddhu", "siddhi"],
+        "letter": "Hey Siddhu,\n\nThinking of our school days brings such a smile to my face. Through all the laughter in the hallways and shared secrets, our friendship has always been a constant source of joy. This is just a little note to say thank you for all the memories and for being the wonderful person you are. Here's to many more years of friendship!"
+      },
+      "tisha": {
+        "nickname": ["tishu", "tisha"],
+        "letter": "Dear Tishu,\n\nFrom classroom giggles to navigating life, our friendship is one of my most treasured possessions. The bond we formed back in school is something special that I'll always cherish. Thanks for being such an amazing friend through it all. Sending you a little reminder of how much you mean to me."
+      },
+      "hardi": {
+        "nickname": ["hardi"],
+        "letter": "My dearest Hardi,\n\nIt feels like just yesterday we were sharing lunchboxes and dreaming about the future. Our school-day memories are some of my favorites, and I'm so grateful that our friendship has continued to grow. This is just a small note to let you know how much I value having you in my life. You're simply the best."
+      },
+      "jaladhi": {
+        "nickname": ["jaladhi"],
+        "letter": "Hey Jaladhi,\n\nRemember all our inside jokes and the fun we had back in school? Those moments built a friendship that I wouldn't trade for anything. You've always been such a kind and supportive friend, and I wanted to take a moment to tell you how much I appreciate that. Thanks for being you."
       }
     
   }
