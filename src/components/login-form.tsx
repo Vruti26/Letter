@@ -64,7 +64,7 @@ export function LoginForm() {
       });
     }
 
-    const handleMouseMove = (e: MouseEvent) => {.
+    const handleMouseMove = (e: MouseEvent) => {
       if (!bg) return;
       const { clientX, clientY } = e;
       const { innerWidth, innerHeight } = window;
@@ -135,8 +135,7 @@ export function LoginForm() {
             className="bg-transparent focus:bg-background/50"
           />
           <div id="nickname-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.nickname &&
-              state.errors.nickname.map((error: string) => (
+            {'nickname' in (state.errors || {}) && state.errors?.nickname?.map((error: string) => (
                 <p className="mt-2 text-sm text-destructive" key={error}>
                   {error}
                 </p>
