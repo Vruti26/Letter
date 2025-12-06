@@ -15,7 +15,7 @@ function SubmitButton() {
   return (
     <Button type="submit" className="w-full" disabled={pending}>
       {pending ? 'Unsealing...' : 'Open Letter'}
-      <LogIn />
+      <LogIn className="ml-2 h-4 w-4" />
     </Button>
   );
 }
@@ -64,7 +64,7 @@ export function LoginForm() {
       });
     }
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e: MouseEvent) => {.
       if (!bg) return;
       const { clientX, clientY } = e;
       const { innerWidth, innerHeight } = window;
@@ -95,7 +95,7 @@ export function LoginForm() {
       <div className="text-center">
         <h2 className="text-3xl font-headline font-bold text-white">A Letter To You</h2>
         <p className="text-white/80 mt-2">
-          Enter your name and nickname to open your letter.
+        Enter your name and nickname (the one I used to call you — or just write your name) to open your letter
         </p>
       </div>
       <div className="space-y-4">
@@ -107,7 +107,7 @@ export function LoginForm() {
             id="name"
             name="name"
             type="text"
-            placeholder="Your Name"
+            placeholder="Ex. Sane"
             required
             aria-describedby="name-error"
             className="bg-transparent focus:bg-background/50"
@@ -129,7 +129,7 @@ export function LoginForm() {
             id="nickname"
             name="nickname"
             type="password"
-            placeholder="Your nickame"
+            placeholder="sanny"
             required
             aria-describedby="nickname-error"
             className="bg-transparent focus:bg-background/50"
