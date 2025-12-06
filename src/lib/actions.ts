@@ -24,7 +24,7 @@ export type State = {
   message?: string | null;
 };
 
-export async function login(prevState: State, formData: FormData) {
+export async function login(prevState: State, formData: FormData): Promise<State> {
   const validatedFields = LoginSchema.safeParse({
     name: formData.get('name'),
     nickname: formData.get('nickname'),
@@ -44,7 +44,7 @@ export async function login(prevState: State, formData: FormData) {
   const user = letters[lowercaseName];
 
   let isValidNickname = false;
-  if (user) {
+  if (user && user.nickname) {
     if (Array.isArray(user.nickname)) {
       isValidNickname = user.nickname.map(n => n.toLowerCase()).includes(trimmedNickname);
     } else if (typeof user.nickname === 'string') {
@@ -59,12 +59,11 @@ export async function login(prevState: State, formData: FormData) {
       maxAge: 60 * 60 * 24, // 1 day
       path: '/',
     });
+    redirect(`/${lowercaseName}/letter`);
   } else {
     return {
       errors: { credentials: "The name or nickname you entered is incorrect. Please try again." },
       message: 'Invalid credentials.',
     };
   }
-
-  redirect(`/${lowercaseName}/letter`);
 }

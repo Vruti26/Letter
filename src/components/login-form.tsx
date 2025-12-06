@@ -44,7 +44,9 @@ export function LoginForm() {
           repeat: 5,
           yoyo: true,
           ease: 'power1.inOut',
-          onComplete: () => gsap.to(formRef.current, { x: 0 }),
+          onComplete: () => {
+            gsap.to(formRef.current, { x: 0 });
+          },
         }
       );
     }
@@ -135,7 +137,8 @@ export function LoginForm() {
             className="bg-transparent focus:bg-background/50"
           />
           <div id="nickname-error" aria-live="polite" aria-atomic="true">
-            {'nickname' in (state.errors || {}) && state.errors?.nickname?.map((error: string) => (
+            {state.errors?.nickname &&
+              state.errors.nickname.map((error: string) => (
                 <p className="mt-2 text-sm text-destructive" key={error}>
                   {error}
                 </p>
