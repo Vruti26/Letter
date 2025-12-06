@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import data from './data.json';
 import { z } from 'zod';
+import { kv } from '@vercel/kv';
 
 const { letters } = data;
 
@@ -69,6 +70,16 @@ export async function login(prevState: State, formData: FormData): Promise<State
 }
 
 export async function trackLetterOpen(name: string) {
-  const timestamp = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
-  console.log(`💌 Letter for ${name} was opened at: ${timestamp} (UTC)`);
+  try {
+    const timestamp = new Date().toISOString();
+    const logEntry = { name, timestamp };
+
+    // We use a unique key for each log entry to avoid overwriting
+    const key = `log:${timestamp}:${name}`;
+
+    await kv.set(key, JSON.stringify(logEntry));
+    console.log(`💌 Letter for ${name} was opened and logged to Vercel KV at: ${timestamp}`);
+  } catch (error) {
+    console.error('Failed to log letter opening to Vercel KV:', error);
+  }
 }
