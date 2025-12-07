@@ -26,6 +26,36 @@ export type State = {
   message?: string | null;
 };
 
+export type LogsLoginState = {
+  error?: string;
+};
+
+export async function loginToLogs(
+  prevState: LogsLoginState,
+  formData: FormData
+): Promise<LogsLoginState> {
+  const password = formData.get('password');
+  const logsPassword = process.env.LOGS_PASSWORD;
+
+  if (!logsPassword) {
+    console.error('LOGS_PASSWORD environment variable not set.');
+    return { error: 'Server configuration error.' };
+  }
+
+  if (password === logsPassword) {
+    const cookieStore = cookies();
+    cookieStore.set('logs_auth', 'true', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60, // 1 hour
+      path: '/',
+    });
+    redirect('/logs');
+  } else {
+    return { error: 'Incorrect password.' };
+  }
+}
+
 export async function login(prevState: State, formData: FormData): Promise<State> {
   const validatedFields = LoginSchema.safeParse({
     name: formData.get('name'),
@@ -65,7 +95,8 @@ export async function login(prevState: State, formData: FormData): Promise<State
   }
 
   if (isValidNickname) {
-    cookies().set('user', lowercaseFirstName, {
+    const cookieStore = cookies();
+    cookieStore.set('user', lowercaseFirstName, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 60 * 60 * 24, // 1 day
