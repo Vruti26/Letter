@@ -108,8 +108,15 @@ export async function login(prevState: State, formData: FormData): Promise<State
     let hint = '';
     if (userNicknames) {
       const firstNickname = Array.isArray(userNicknames) ? userNicknames[0] : userNicknames;
-      if (firstNickname) {
-        hint = `Hint: Your nickname starts with '${firstNickname.charAt(0).toLowerCase()}'.`;
+      if (firstNickname && firstNickname.length > 0) {
+        if (firstNickname.length > 2) {
+          const firstChar = firstNickname.charAt(0).toLowerCase();
+          const lastChar = firstNickname.charAt(firstNickname.length - 1).toLowerCase();
+          const middleDots = '.'.repeat(firstNickname.length - 2);
+          hint = `Hint: Your nickname is like '${firstChar}${middleDots}${lastChar}'.`;
+        } else {
+           hint = `Hint: Your nickname starts with '${firstNickname.charAt(0).toLowerCase()}'.`;
+        }
       }
     }
     return {
