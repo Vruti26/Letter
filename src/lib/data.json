@@ -4,9 +4,9 @@
       "nickname": ["v", "vru", "vr"],
       "letter": "My Dearest VR,\n\nIn the quiet moments, my thoughts drift to you, a gentle melody in the symphony of my days. You are the warmth of the morning sun, the serene light of the moon, a constant source of joy and wonder. Every shared smile, every quiet understanding, weaves another thread into the beautiful tapestry of our connection. This is just a small whisper of what you mean to me, a secret held in the heart, now shared with you."
     },
-    "smit": {
-      "nickname": ["samu"],
-      "letter": "To my dear Samu,\n\nI wanted to take a moment to put into words something my heart feels every day. You have a way of making ordinary moments feel extraordinary. Your laughter is my favorite sound, and your strength inspires me more than you know. This is a small token, a secret note to remind you of the special place you hold in my life. Thank you for being you."
+    "smit_senior": {
+      "nickname": ["smit"],
+      "letter": "Hello Smit,\n\nI wanted to take a moment to thank you for your guidance and support. Your advice has been incredibly helpful. Wishing you all the best!"
     },
     "user": {
       "nickname": ["test", "tester"],
@@ -50,7 +50,54 @@
       "jaladhi": {
         "nickname": ["jaladhi"],
         "letter": "Hey ,\n\nRemember all our inside jokes and the fun we had back in school? Those moments built a friendship that I wouldn't trade for anything. You've always been such a kind and supportive friend, and I wanted to take a moment to tell you how much I appreciate that. Thanks for being you."
+      },
+      "dhruvi": {
+        "nickname": ["dhruvi", "didi"],
+        "letter": "Hello Dhruvi,\n\nI just wanted to write a small note to thank you. Your guidance throughout my academics has been a huge help, and I really appreciate the time you took to support me. Thank you for everything!"
+      },
+      "devansh": {
+        "nickname": ["vd", "devansh"],
+        "letter": "Hii Devansh,\n\nI'm writing this to thank you for all the guidance and help you've given me with my academics. It made a real difference, and I'm very grateful for your support."
+      },
+      "rajvi": {
+        "nickname": ["rajvi"],
+        "letter": "Hello Rajvi,\n\nI wanted to send a quick note to thank you for being a supportive senior. I appreciate your help and guidance."
+      },
+      "shivam": {
+        "nickname": ["shivam"],
+        "letter": "Hello Shivam,\n\nJust wanted to thank you for your guidance. As a senior, your support has been really helpful. Thank you!"
+      },
+      "abhay": {
+        "nickname": ["abhay"],
+        "letter": "Hello Abhay,\n\nThis is just a small note to thank you for being a helpful senior. I really appreciate your guidance."
+      },
+      "pujan": {
+        "nickname": ["poojan", "pujan"],
+        "letter": "Hello Pujan,\n\nI hope this letter finds you well."
+      },
+      "sameer": {
+        "nickname": ["sam"],
+        "letter": "Hello Sameer,\n\nIt was great meeting you during the HTS campaigning. Hope you're doing well!"
+      },
+      "krina": {
+        "nickname": ["krina"],
+        "letter": "Hello Krina,\n\nI still remember seeing you on the first day of college and thinking how cool you were. I'm so glad we became friends. It's been wonderful having you as my first friend here, especially being right next door. Hope you're having a great day!"
+      },
+      "harsh": {
+        "nickname": ["harsh"],
+        "letter": ""
+      },
+      "preet": {
+        "nickname": ["preet"],
+        "letter": ""
+      },
+      "daivik": {
+        "nickname": ["daivik"],
+        "letter": ""
+      },
+      "vraj": {
+        "nickname": ["vraj"],
+        "letter": ""
       }
-    
   }
 }
