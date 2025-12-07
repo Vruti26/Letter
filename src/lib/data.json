@@ -1,3 +1,4 @@
+
 {
   "letters": {
     "vruti": {
@@ -36,24 +37,24 @@
         "letter": "Hello !,\n\nYour letter is here. You are warm, strong, and beautifully unique. I hope this message carries a little comfort and a quiet smile for you."
       },
       "siddhi": {
-        "nickname": ["siddhu", "siddhi"],
+        "nickname": ["siddhi"],
         "letter": "Hey Siddhu,\n\nThinking of our school days brings such a smile to my face. Through all the laughter in the hallways and shared secrets, our friendship has always been a constant source of joy. This is just a little note to say thank you for all the memories and for being the wonderful person you are. Here's to many more years of friendship!"
       },
       "tisha": {
         "nickname": ["tishu", "tisha"],
-        "letter": "Hello,\n\nFrom classroom giggles to navigating life, our friendship is one of my most treasured possessions. The bond we formed back in school is something special that I'll always cherish. Thanks for being such an amazing friend through it all. Sending you a little reminder of how much you mean to me."
+        "letter": "Hello Tishu,\n\nFrom classroom giggles to navigating life, our friendship is one of my most treasured possessions. The bond we formed back in school is something special that I'll always cherish. Thanks for being such an amazing friend through it all. Sending you a little reminder of how much you mean to me."
       },
       "hardi": {
         "nickname": ["hardi"],
-        "letter": "Heyyy !!\n\nIt feels like just yesterday we were sharing lunchboxes and dreaming about the future. Our school-day memories are some of my favorites, and I'm so grateful that our friendship has continued to grow. This is just a small note to let you know how much I value having you in my life. You're simply the best."
+        "letter": "Heyyy Hardi!!\n\nIt feels like just yesterday we were sharing lunchboxes and dreaming about the future. Our school-day memories are some of my favorites, and I'm so grateful that our friendship has continued to grow. This is just a small note to let you know how much I value having you in my life. You're simply the best."
       },
       "jaladhi": {
         "nickname": ["jaladhi"],
-        "letter": "Hey ,\n\nRemember all our inside jokes and the fun we had back in school? Those moments built a friendship that I wouldn't trade for anything. You've always been such a kind and supportive friend, and I wanted to take a moment to tell you how much I appreciate that. Thanks for being you."
+        "letter": "Hey Jaladhi,\n\nRemember all our inside jokes and the fun we had back in school? Those moments built a friendship that I wouldn't trade for anything. You've always been such a kind and supportive friend, and I wanted to take a moment to tell you how much I appreciate that. Thanks for being you."
       },
       "dhruvi": {
         "nickname": ["dhruvi", "didi"],
-        "letter": "Hello,\n\nI just wanted to write a small note to thank you. Your guidance throughout my academics has been a huge help, and I really appreciate the time you took to support me. I still remember us talking till 4 am—it was a great journey with you, and I will miss you. Thank you for everything!"
+        "letter": "Hii Didi,\n\nI wanted to try and put into words how much your guidance has meant to me. More than just a senior, you've been a mentor and a true friend. Those nights we'd talk until 4 am are memories I'll always hold close—it wasn't just about advice, it was about connection and knowing someone was there.\n\nThat journey with you was one of the best parts of my college experience, and honestly, it's hard to imagine it without you. I'm going to miss you more than I can say. Thank you for everything."
       },
       "devansh": {
         "nickname": ["vd", "devansh"],
@@ -101,3 +102,5 @@
       }
   }
 }
+
+    
