@@ -22,11 +22,12 @@ function SubmitButton() {
 }
 
 export function LoginForm() {
-  const initialState: State = { message: null, errors: {} };
+  const initialState: State = { message: null, errors: {}, name: '' };
   const [state, dispatch] = useActionState(login, initialState);
   const { toast } = useToast();
 
   const formRef = useRef<HTMLFormElement>(null);
+  const nicknameInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (state.errors && 'credentials' in state.errors) {
@@ -35,6 +36,12 @@ export function LoginForm() {
         title: 'Login Failed',
         description: state.errors.credentials,
       });
+
+      // Clear nickname field and focus it
+      if (nicknameInputRef.current) {
+        nicknameInputRef.current.value = '';
+        nicknameInputRef.current.focus();
+      }
 
       gsap.fromTo(
         formRef.current,
@@ -114,6 +121,7 @@ export function LoginForm() {
             required
             aria-describedby="name-error"
             className="bg-transparent focus:bg-background/50"
+            defaultValue={state.name}
           />
           <div id="name-error" aria-live="polite" aria-atomic="true">
             {state.errors && 'name' in state.errors && state.errors.name &&
@@ -129,6 +137,7 @@ export function LoginForm() {
             Your Nickname
           </Label>
           <Input
+            ref={nicknameInputRef}
             id="nickname"
             name="nickname"
             type="password"

@@ -24,6 +24,7 @@ export type State = {
     credentials?: string;
   };
   message?: string | null;
+  name?: string;
 };
 
 export type LogsLoginState = {
@@ -66,6 +67,7 @@ export async function login(prevState: State, formData: FormData): Promise<State
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Invalid fields.',
+      name: formData.get('name')?.toString(),
     };
   }
 
@@ -80,6 +82,7 @@ export async function login(prevState: State, formData: FormData): Promise<State
     return {
       errors: { credentials: "You don't have a letter for this name." },
       message: 'User not found.',
+      name,
     };
   }
   
@@ -112,7 +115,7 @@ export async function login(prevState: State, formData: FormData): Promise<State
         if (firstNickname.length > 2) {
           const firstChar = firstNickname.charAt(0).toLowerCase();
           const lastChar = firstNickname.charAt(firstNickname.length - 1).toLowerCase();
-          const middleDots = '.'.repeat(firstNickname.length - 2);
+          const middleDots = '.'.repeat(Math.max(0, firstNickname.length - 2));
           hint = `Hint: Your nickname is like '${firstChar}${middleDots}${lastChar}'.`;
         } else {
            hint = `Hint: Your nickname starts with '${firstNickname.charAt(0).toLowerCase()}'.`;
@@ -122,6 +125,7 @@ export async function login(prevState: State, formData: FormData): Promise<State
     return {
       errors: { credentials: `Incorrect nickname. ${hint}` },
       message: 'Invalid nickname.',
+      name,
     };
   }
 }
