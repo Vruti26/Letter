@@ -1,4 +1,4 @@
-import { Redis } from '@upstash/redis';
+import { redis } from '@/lib/redis';
 import {
   Table,
   TableBody,
@@ -9,8 +9,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatDistanceToNow } from 'date-fns';
-
-const redis = Redis.fromEnv();
 
 type LogEntry = {
   name: string;

@@ -4,9 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import data from './data.json';
 import { z } from 'zod';
-import { Redis } from '@upstash/redis';
-
-const redis = Redis.fromEnv();
+import { redis } from './redis';
 
 const { letters } = data;
 
@@ -105,7 +103,7 @@ export async function login(prevState: State, formData: FormData): Promise<State
       maxAge: 60 * 60 * 24, // 1 day
       path: '/',
     });
-    return redirect(`/${lowercaseFirstName}/letter`);
+    redirect(`/${lowercaseFirstName}/letter`);
   } else {
     // Provide a hint
     let hint = '';
