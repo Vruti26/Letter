@@ -4,7 +4,9 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import data from './data.json';
 import { z } from 'zod';
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
 
 const { letters } = data;
 
@@ -93,10 +95,10 @@ export async function trackLetterOpen(name: string) {
 
     const key = `log:${timestamp}:${name}`;
 
-    await kv.set(key, JSON.stringify(logEntry));
-    console.log(`💌 Letter for ${name} was opened and logged to Vercel KV at: ${timestamp}`);
+    await redis.set(key, JSON.stringify(logEntry));
+    console.log(`💌 Letter for ${name} was opened and logged to Upstash Redis at: ${timestamp}`);
   } catch (error)
   {
-    console.error('Failed to log letter opening to Vercel KV:', error);
+    console.error('Failed to log letter opening to Upstash Redis:', error);
   }
 }

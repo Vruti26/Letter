@@ -1,4 +1,4 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
 import {
   Table,
   TableBody,
@@ -10,6 +10,8 @@ import {
 } from '@/components/ui/table';
 import { formatDistanceToNow } from 'date-fns';
 
+const redis = Redis.fromEnv();
+
 type LogEntry = {
   name: string;
   timestamp: string;
@@ -17,11 +19,11 @@ type LogEntry = {
 
 async function getLogs() {
   try {
-    const keys = await kv.keys('log:*');
+    const keys = await redis.keys('log:*');
     if (keys.length === 0) {
       return [];
     }
-    const items: (string | null)[] = await kv.mget(...keys);
+    const items: (string | null)[] = await redis.mget(...keys);
 
     const logs: LogEntry[] = items
       .filter((item): item is string => item !== null)
