@@ -1,4 +1,4 @@
-import { redis } from '@/lib/redis';
+import { Redis } from '@upstash/redis';
 import {
   Table,
   TableBody,
@@ -17,6 +17,10 @@ type LogEntry = {
 
 async function getLogs() {
   try {
+    const redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL!,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    });
     const keys = await redis.keys('log:*');
     if (keys.length === 0) {
       return [];

@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import data from './data.json';
 import { z } from 'zod';
-import { redis } from './redis';
+import { Redis } from '@upstash/redis';
 
 const { letters } = data;
 
@@ -130,6 +130,10 @@ export async function login(prevState: State, formData: FormData): Promise<State
 
 export async function trackLetterOpen(name: string) {
   try {
+    const redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL!,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    });
     const timestamp = new Date().toISOString();
     const logEntry = { name, timestamp };
 
