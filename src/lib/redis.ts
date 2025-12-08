@@ -1,6 +1,10 @@
-import { Redis } from "@upstash/redis";
+import { Redis } from '@upstash/redis';
+
+if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+  throw new Error('UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN must be set in the environment');
+}
 
 export const redis = new Redis({
-    url: 'https://beloved-dane-19347.upstash.io',
-    token: 'AUuTAAIncDIzNTQ1ZDI0Y2UxMWI0NDYyYjMzZDVjNTc4MTk1ZmEyYXAyMTkzNDc',
-  });
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});

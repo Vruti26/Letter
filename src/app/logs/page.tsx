@@ -1,4 +1,4 @@
-import { Redis } from '@upstash/redis';
+import { redis } from '@/lib/redis';
 import {
   Table,
   TableBody,
@@ -17,29 +17,66 @@ type LogEntry = {
 
 async function getLogs() {
   try {
-    const redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL!,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-    });
-    const keys = await redis.keys('log:*');
-    if (keys.length === 0) {
-      return [];
-    }
-    const items: (string | null)[] = await redis.mget(...keys);
+    console.log("Fetching logs...");
 
-    const logs: LogEntry[] = items
-      .filter((item): item is string => item !== null)
-      .map((item) => JSON.parse(item));
+    // --- Fetch from new sorted set format ---
+    const newLogEntries: string[] = await redis.zrange('logs', 0, -1, { rev: true });
+    const newLogs: LogEntry[] = newLogEntries.map((entry) => JSON.parse(entry));
+    console.log(`Found ${newLogs.length} logs in the new format.`);
+
+    // --- Fetch from old key format using SCAN for safety ---
+    console.log("Scanning for old log keys...");
+    const oldLogKeys: string[] = [];
+    let cursor = 0;
+    do {
+      const [nextCursor, keys] = await redis.scan(cursor, { match: 'log:*', count: 100 });
+      cursor = nextCursor;
+      oldLogKeys.push(...keys);
+    } while (cursor !== 0);
+    console.log(`Found ${oldLogKeys.length} old log keys.`);
+
+    let oldLogs: LogEntry[] = [];
+    if (oldLogKeys.length > 0) {
+      console.log("Fetching old log items...");
+      // Use mget in batches to avoid hitting command size limits
+      const batchSize = 100;
+      for (let i = 0; i < oldLogKeys.length; i += batchSize) {
+        const batchKeys = oldLogKeys.slice(i, i + batchSize);
+        const items: (string | null)[] = await redis.mget(...batchKeys);
+        const parsedItems = items
+          .filter((item): item is string => item !== null)
+          .map((item) => {
+            try {
+              return JSON.parse(item);
+            } catch (e) {
+              console.error('Failed to parse old log item:', item);
+              return null;
+            }
+          })
+          .filter((log): log is LogEntry => log !== null);
+        oldLogs.push(...parsedItems);
+      }
+      console.log(`Successfully parsed ${oldLogs.length} old log entries.`);
+    }
+
+    // --- Combine and de-duplicate logs ---
+    const allLogs = [...newLogs, ...oldLogs];
+    console.log(`Total logs before de-duplication: ${allLogs.length}`);
+    const uniqueLogs = Array.from(new Map(allLogs.map(log => [log.timestamp, log])).values());
+    console.log(`Total logs after de-duplication: ${uniqueLogs.length}`);
 
     // Sort logs by timestamp, newest first
-    logs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    uniqueLogs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
-    return logs;
+    console.log("Log fetching complete.");
+    return uniqueLogs;
+
   } catch (error) {
-    console.error("Failed to fetch logs:", error);
-    return [];
+    console.error("A critical error occurred while fetching logs:", error);
+    return []; // Return an empty array on error
   }
 }
+
 
 export default async function LogsPage() {
   const logs = await getLogs();

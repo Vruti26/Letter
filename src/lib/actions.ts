@@ -176,13 +176,16 @@ export async function login(prevState: State, formData: FormData): Promise<State
 
 export async function trackLetterOpen(name: string) {
   try {
-    const timestamp = new Date().toISOString();
-    const logEntry = { name, timestamp };
-    const key = `log:${timestamp}:${name}`;
+    const timestamp = Date.now();
+    const logEntry = { name, timestamp: new Date(timestamp).toISOString() };
 
-    await redis.set(key, JSON.stringify(logEntry));
+    // Use a sorted set 'logs' with timestamp as score
+    await redis.zadd('logs', {
+      score: timestamp,
+      member: JSON.stringify(logEntry),
+    });
 
-    console.log(`💌 Letter for ${name} was opened at ${timestamp}`);
+    console.log(`💌 Letter for ${name} was opened at ${new Date(timestamp).toISOString()}`);
   } catch (error) {
     console.error('Failed to log letter opening to Upstash Redis:', error);
   }

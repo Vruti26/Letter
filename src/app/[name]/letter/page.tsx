@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import data from '@/lib/data.json';
 import { LetterDisplay } from '@/components/letter-display';
 import type { Metadata } from 'next';
+import { trackLetterOpen } from '@/lib/actions'; // 
 
 type LetterKeys = keyof typeof data.letters;
 
@@ -28,6 +29,9 @@ export default function LetterPage({ params }: { params: { name: string } }) {
     // as they might just need to log in to see the content.
     redirect('/login');
   }
+
+  // After successful validation, track the letter opening.
+  trackLetterOpen(params.name); // 
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 bg-gradient-to-br from-background via-indigo-950/50 to-background">
