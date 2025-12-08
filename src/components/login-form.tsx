@@ -10,12 +10,13 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { AlertCircle, LogIn } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" className="w-full" disabled={pending}>
-      {pending ? 'Unsealing...' : 'Open Letter'}
+      {pending ? 'Generating...' : 'Get Letter'}
       <LogIn className="ml-2 h-4 w-4" />
     </Button>
   );
@@ -37,7 +38,6 @@ export function LoginForm() {
         description: state.errors.credentials,
       });
 
-      // Clear nickname field and focus it
       if (nicknameInputRef.current) {
         nicknameInputRef.current.value = '';
         nicknameInputRef.current.focus();
@@ -62,8 +62,6 @@ export function LoginForm() {
 
   useEffect(() => {
     const card = formRef.current;
-    const bg = document.getElementById('parallax-bg');
-
     if (card) {
       gsap.from(card, {
         duration: 1,
@@ -73,28 +71,20 @@ export function LoginForm() {
         ease: 'power3.out',
       });
     }
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!bg) return;
-      const { clientX, clientY } = e;
-      const { innerWidth, innerHeight } = window;
-      const x = (clientX / innerWidth - 0.5) * 2;
-      const y = (clientY / innerHeight - 0.5) * 2;
-
-      gsap.to(bg, {
-        x: -x * 30,
-        y: -y * 30,
-        duration: 1.5,
-        ease: 'power2.out',
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
   }, []);
+
+  if (state.generatedLetter) {
+    return (
+        <div className="glass-card z-10 w-full max-w-md p-8 space-y-6">
+            <div className="text-center">
+                <h2 className="text-3xl font-headline font-bold text-white">A Letter For You, {state.name}</h2>
+            </div>
+            <div className="text-white/80 whitespace-pre-wrap">
+                {state.generatedLetter}
+            </div>
+        </div>
+    )
+  }
 
   return (
     <form
@@ -105,59 +95,71 @@ export function LoginForm() {
       <div className="text-center">
         <h2 className="text-3xl font-headline font-bold text-white">A Letter To You</h2>
         <p className="text-white/80 mt-2">
-        Enter your name and nickname (the one I used to call you — or just write your name) to open your letter
+            {state.userNotFound ? "Seems I don't know you yet. Tell me who you are." : "Enter your name and nickname to open your letter"}
         </p>
       </div>
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="name" className="text-white/90">
-            Your Name
-          </Label>
-          <Input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="Ex. Sane"
-            required
-            aria-describedby="name-error"
-            className="bg-transparent focus:bg-background/50"
-            defaultValue={state.name}
-          />
-          <div id="name-error" aria-live="polite" aria-atomic="true">
-            {state.errors && 'name' in state.errors && state.errors.name &&
-              state.errors.name.map((error: string) => (
-                <p className="mt-2 text-sm text-destructive" key={error}>
-                  {error}
-                </p>
-              ))}
-          </div>
+
+      {state.userNotFound ? (
+        <div className="space-y-4">
+            <Input type="hidden" name="name" value={state.name} />
+            <div className="space-y-2">
+                <Label htmlFor="relationship" className="text-white/90">
+                    Who are you to me?
+                </Label>
+                <Select name="relationship" required>
+                    <SelectTrigger className="w-full bg-transparent focus:bg-background/50">
+                    <SelectValue placeholder="Select a relationship" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="friend">Friend</SelectItem>
+                        <SelectItem value="colleague">Colleague</SelectItem>
+                        <SelectItem value="interviewer">Interviewer</SelectItem>
+                        <SelectItem value="teacher">Teacher</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+            <SubmitButton />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="nickname" className="text-white/90">
-            Your Nickname
-          </Label>
-          <Input
-            ref={nicknameInputRef}
-            id="nickname"
-            name="nickname"
-            type="password"
-            placeholder="sanny"
-            required
-            aria-describedby="nickname-error"
-            className="bg-transparent focus:bg-background/50"
-          />
-          <div id="nickname-error" aria-live="polite" aria-atomic="true">
-            {state.errors && 'nickname' in state.errors && state.errors.nickname &&
-              state.errors.nickname.map((error: string) => (
-                <p className="mt-2 text-sm text-destructive" key={error}>
-                  {error}
-                </p>
-              ))}
+      ) : (
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-white/90">
+              Your Name
+            </Label>
+            <Input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Ex. Sane"
+              required
+              aria-describedby="name-error"
+              className="bg-transparent focus:bg-background/50"
+              defaultValue={state.name}
+            />
+            {/* ... name error handling ... */}
           </div>
+          <div className="space-y-2">
+            <Label htmlFor="nickname" className="text-white/90">
+              Your Nickname
+            </Label>
+            <Input
+              ref={nicknameInputRef}
+              id="nickname"
+              name="nickname"
+              type="password"
+              placeholder="sanny"
+              required
+              aria-describedby="nickname-error"
+              className="bg-transparent focus:bg-background/50"
+            />
+            {/* ... nickname error handling ... */}
+          </div>
+          <Button type="submit" className="w-full">
+            Open Letter
+            <LogIn className="ml-2 h-4 w-4" />
+          </Button>
         </div>
-      </div>
-      
-      <SubmitButton />
+      )}
 
       {state.errors && 'credentials' in state.errors && (
         <div className="flex items-center space-x-2 text-sm text-destructive" aria-live="polite">

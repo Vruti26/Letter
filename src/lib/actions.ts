@@ -5,6 +5,16 @@ import { redirect } from "next/navigation";
 import data from "./data.json";
 import { z } from "zod";
 import { redis } from "@/lib/redis"; // ← using shared redis client
+import { generate } from 'genkit';
+import { googleAI } from '@genkit-ai/google-genai';
+import { configure } from 'genkit';
+
+configure({
+  plugins: [googleAI()],
+  logLevel: "debug",
+  enableTracing: true,
+});
+
 
 const letters: LettersRecord = data.letters;
 type LetterData = {
@@ -28,6 +38,8 @@ export type State = {
   };
   message?: string | null;
   name?: string;
+  userNotFound?: boolean;
+  generatedLetter?: string;
 };
 
 export type LogsLoginState = {
@@ -65,6 +77,23 @@ export async function loginToLogs(
 /* ---------------------- MAIN LETTER LOGIN ---------------------- */
 
 export async function login(prevState: State, formData: FormData): Promise<State> {
+    const name = formData.get("name") as string;
+    const relationship = formData.get("relationship");
+
+    if (relationship) {
+        const prompt = `Write a short, friendly and sweet message to ${name}, who is my ${relationship}.`;
+        const llmResponse = await generate({
+            model: 'gemini-1.5-flash',
+            prompt: prompt,
+        });
+        const letter = llmResponse.text();
+
+        return {
+            name,
+            generatedLetter: letter
+        }
+    }
+
   const validatedFields = LoginSchema.safeParse({
     name: formData.get("name"),
     nickname: formData.get("nickname"),
@@ -78,7 +107,7 @@ export async function login(prevState: State, formData: FormData): Promise<State
     };
   }
 
-  const { name, nickname } = validatedFields.data;
+  const { nickname } = validatedFields.data;
 
   const lowercaseFirstName =
     name.toLowerCase().trim().split(" ")[0] as keyof typeof letters;
@@ -89,9 +118,8 @@ export async function login(prevState: State, formData: FormData): Promise<State
 
   if (!user) {
     return {
-      errors: { credentials: "You don't have a letter for this name." },
-      message: "User not found.",
-      name,
+        name,
+        userNotFound: true,
     };
   }
 
